@@ -91,7 +91,7 @@ DIFY_API_URL=https://api.dify.ai
 ## 🤝 Support
 
 For issues, feature requests, or questions:
-- GitHub: [shamspias/pdf-to-image-plugin](https://github.com/shamspias/pdf-to-image-plugin)
+- GitHub: [shamspias/dify-pdf-image-converter](https://github.com/shamspias/dify-pdf-image-converter)
 - Email: info@shamspias.com
 
 ## 📄 License
