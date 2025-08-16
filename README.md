@@ -13,6 +13,7 @@ A powerful PDF to image conversion plugin for Dify that converts PDF pages into 
 - **🎯 Quality Control**: Adjustable JPEG compression quality (1-100)
 - **🔍 Transparency Support**: Optional alpha channel for PNG format
 - **📊 Batch Processing**: Handle multiple PDF files simultaneously
+- **🔧 Robust File Handling**: Supports both direct file uploads and URL-based file references
 
 ## 📦 Installation
 
@@ -57,6 +58,21 @@ The plugin returns:
   - Processing statistics
 - Summary report of the conversion process
 
+## 🔧 Troubleshooting
+
+### File Access Issues
+If you encounter "Error accessing file" messages:
+1. Ensure the plugin has proper permissions
+2. Check that the FILES_URL environment variable is set if using URL-based files
+3. Verify the file format is PDF
+
+### Environment Variables (Optional)
+```bash
+# Base URL for file fetching (if needed)
+FILES_URL=http://your-dify-instance:5001
+DIFY_API_URL=https://api.dify.ai
+```
+
 ## 🔒 Privacy & Security
 
 - No data collection or storage
@@ -69,12 +85,13 @@ The plugin returns:
 
 - PyMuPDF library (included)
 - Pillow for image processing (included)
+- Requests for URL file handling (included)
 - Compatible with Dify plugin system
 
 ## 🤝 Support
 
 For issues, feature requests, or questions:
-- GitHub: [your-github-username/pdf-to-image-plugin]
+- GitHub: [shamspias/pdf-to-image-plugin]
 - Email: your-email@example.com
 
 ## 📄 License
@@ -85,3 +102,4 @@ This plugin is licensed under the [MIT License](LICENSE).
 
 - Built with PyMuPDF and Pillow
 - Developed for the Dify platform
+- Robust file handling for various Dify configurations
