@@ -1,0 +1,174 @@
+identity:
+  name: pdf2image
+  author: shamspias
+  label:
+    en_US: PDF to Image Converter
+    bn_BD: পিডিএফ থেকে ইমেজ কনভার্টার
+    ru_RU: Конвертер PDF в изображения
+    zh_Hans: PDF转图片
+    pt_BR: Conversor PDF para Imagem
+description:
+  human:
+    en_US: Convert PDF pages to high-quality images with customizable format and resolution
+    bn_BD: পিডিএফ পৃষ্ঠাগুলোকে উচ্চমানের ইমেজে রূপান্তর করুন, ফরম্যাট এবং রেজোলিউশন কাস্টমাইজ করার সুবিধাসহ
+    ru_RU: Конвертируйте страницы PDF в изображения высокого качества с настройкой формата и разрешения
+    zh_Hans: 将PDF页面转换为高质量图片，支持自定义格式和分辨率
+    pt_BR: Converta páginas PDF em imagens de alta qualidade com formato e resolução personalizáveis
+  llm: Convert PDF documents into individual page images with options for format (PNG/JPEG), resolution (DPI), and quality settings
+parameters:
+  - name: files
+    type: files
+    required: true
+    label:
+      en_US: PDF Files
+      bn_BD: পিডিএফ ফাইলসমূহ
+      ru_RU: Файлы PDF
+      zh_Hans: PDF文件
+      pt_BR: Arquivos PDF
+    human_description:
+      en_US: Upload PDF files to convert to images
+      bn_BD: ইমেজে রূপান্তর করতে পিডিএফ ফাইল আপলোড করুন
+      ru_RU: Загрузите PDF-файлы для конвертации в изображения
+      zh_Hans: 上传要转换为图片的PDF文件
+      pt_BR: Carregar arquivos PDF para converter em imagens
+    form: llm
+
+  - name: image_format
+    type: select
+    required: false
+    default: png
+    options:
+      - value: png
+        label:
+          en_US: PNG
+          bn_BD: PNG
+          ru_RU: PNG
+          zh_Hans: PNG
+      - value: jpeg
+        label:
+          en_US: JPEG
+          bn_BD: JPEG
+          ru_RU: JPEG
+          zh_Hans: JPEG
+      - value: jpg
+        label:
+          en_US: JPG
+          bn_BD: JPG
+          ru_RU: JPG
+          zh_Hans: JPG
+    label:
+      en_US: Image Format
+      bn_BD: ইমেজ ফরম্যাট
+      ru_RU: Формат изображения
+      zh_Hans: 图片格式
+      pt_BR: Formato da Imagem
+    human_description:
+      en_US: Output image format (PNG for quality, JPEG for smaller size)
+      bn_BD: আউটপুট ইমেজ ফরম্যাট (PNG ভালো মানের জন্য, JPEG ছোট আকারের জন্য)
+      ru_RU: Формат выходного изображения (PNG для качества, JPEG для меньшего размера)
+      zh_Hans: 输出图片格式（PNG质量更好，JPEG文件更小）
+      pt_BR: Formato de saída da imagem (PNG para qualidade, JPEG para tamanho menor)
+    form: form
+
+  - name: dpi
+    type: select
+    required: false
+    default: 150
+    options:
+      - value: 72
+        label:
+          en_US: 72 DPI (Screen)
+          bn_BD: ৭২ ডিপিআই (স্ক্রিন)
+          ru_RU: 72 DPI (Экран)
+          zh_Hans: 72 DPI (屏幕)
+      - value: 150
+        label:
+          en_US: 150 DPI (Standard)
+          bn_BD: ১৫০ ডিপিআই (স্ট্যান্ডার্ড)
+          ru_RU: 150 DPI (Стандарт)
+          zh_Hans: 150 DPI (标准)
+      - value: 300
+        label:
+          en_US: 300 DPI (High Quality)
+          bn_BD: ৩০০ ডিপিআই (উচ্চ মানের)
+          ru_RU: 300 DPI (Высокое качество)
+          zh_Hans: 300 DPI (高质量)
+      - value: 600
+        label:
+          en_US: 600 DPI (Print Quality)
+          bn_BD: ৬০০ ডিপিআই (প্রিন্ট মানের)
+          ru_RU: 600 DPI (Печатное качество)
+          zh_Hans: 600 DPI (印刷质量)
+    label:
+      en_US: Resolution (DPI)
+      bn_BD: রেজোলিউশন (DPI)
+      ru_RU: Разрешение (DPI)
+      zh_Hans: 分辨率 (DPI)
+      pt_BR: Resolução (DPI)
+    human_description:
+      en_US: Image resolution in dots per inch
+      bn_BD: ইমেজ রেজোলিউশন প্রতি ইঞ্চিতে ডটস হিসেবে
+      ru_RU: Разрешение изображения в точках на дюйм
+      zh_Hans: 图片分辨率（每英寸点数）
+      pt_BR: Resolução da imagem em pontos por polegada
+    form: form
+
+  - name: quality
+    type: number
+    required: false
+    default: 95
+    min: 1
+    max: 100
+    label:
+      en_US: JPEG Quality
+      bn_BD: JPEG গুণমান
+      ru_RU: Качество JPEG
+      zh_Hans: JPEG质量
+      pt_BR: Qualidade JPEG
+    human_description:
+      en_US: JPEG compression quality (1-100, only for JPEG format)
+      bn_BD: JPEG কমপ্রেশন মান (১-১০০, শুধুমাত্র JPEG ফরম্যাটের জন্য)
+      ru_RU: Качество сжатия JPEG (1–100, только для формата JPEG)
+      zh_Hans: JPEG压缩质量（1-100，仅适用于JPEG格式）
+      pt_BR: Qualidade de compressão JPEG (1-100, apenas para formato JPEG)
+    form: form
+
+  - name: split_pages
+    type: boolean
+    required: false
+    default: true
+    label:
+      en_US: Split Pages
+      bn_BD: পৃষ্ঠা বিভক্ত করুন
+      ru_RU: Разделить страницы
+      zh_Hans: 分割页面
+      pt_BR: Dividir Páginas
+    human_description:
+      en_US: Create separate image for each page
+      bn_BD: প্রতিটি পৃষ্ঠার জন্য আলাদা ইমেজ তৈরি করুন
+      ru_RU: Создавать отдельное изображение для каждой страницы
+      zh_Hans: 为每一页创建单独的图片
+      pt_BR: Criar imagem separada para cada página
+    form: form
+
+  - name: alpha_channel
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Transparency (PNG only)
+      bn_BD: স্বচ্ছতা (শুধুমাত্র PNG)
+      ru_RU: Прозрачность (только PNG)
+      zh_Hans: 透明度（仅PNG）
+      pt_BR: Transparência (apenas PNG)
+    human_description:
+      en_US: Include alpha channel for transparency (PNG only)
+      bn_BD: স্বচ্ছতার জন্য আলফা চ্যানেল অন্তর্ভুক্ত করুন (শুধুমাত্র PNG এর জন্য)
+      ru_RU: Включить альфа-канал для прозрачности (только PNG)
+      zh_Hans: 包含透明通道（仅适用于PNG）
+      pt_BR: Incluir canal alfa para transparência (apenas PNG)
+    form: form
+
+extra:
+  python:
+    source: tools/pdf2image.py
