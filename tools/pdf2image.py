@@ -4,6 +4,8 @@ from typing import Any
 import io
 import base64
 from pathlib import Path
+import os
+import requests
 
 from dify_plugin import Tool
 from dify_plugin.entities.tool import ToolInvokeMessage
@@ -26,6 +28,68 @@ class Pdf2imageTool(Tool):
     """
     A tool for converting PDF pages to images using PyMuPDF
     """
+
+    def _get_file_content(self, file: File) -> bytes:
+        """
+        Get file content either from blob or by fetching from URL
+        """
+        # First, try to get the blob directly
+        if hasattr(file, 'blob') and file.blob:
+            logger.info(f"Using direct blob for {file.filename}")
+            return file.blob
+
+        # If no blob, try to fetch from URL
+        if hasattr(file, 'remote_url') and file.remote_url:
+            logger.info(f"Fetching file from URL for {file.filename}")
+
+            # Check if it's a relative URL that needs a base URL
+            url = file.remote_url
+            if url.startswith('/'):
+                # Try to get base URL from environment or use default
+                base_url = os.getenv('FILES_URL', '')
+                if not base_url:
+                    # Try common Dify URLs
+                    possible_bases = [
+                        os.getenv('DIFY_API_URL', ''),
+                        'http://localhost:5001',
+                        'https://api.dify.ai'
+                    ]
+                    for base in possible_bases:
+                        if base:
+                            base_url = base.rstrip('/')
+                            break
+
+                if base_url:
+                    url = base_url + url
+                    logger.info(f"Constructed full URL: {url}")
+                else:
+                    raise ValueError(f"Cannot construct full URL from relative path: {file.remote_url}")
+
+            # Fetch the file
+            try:
+                response = requests.get(url, timeout=30)
+                response.raise_for_status()
+                return response.content
+            except requests.RequestException as e:
+                logger.error(f"Failed to fetch file from {url}: {e}")
+                raise ValueError(f"Failed to fetch file from URL: {e}")
+
+        # If file has a _blob attribute (alternative naming)
+        if hasattr(file, '_blob') and file._blob:
+            return file._blob
+
+        # Try to read file data if it's a file-like object
+        if hasattr(file, 'read'):
+            content = file.read()
+            if hasattr(file, 'seek'):
+                file.seek(0)  # Reset file pointer
+            return content
+
+        # Last resort: try to access raw file data
+        if hasattr(file, 'data') and file.data:
+            return file.data
+
+        raise ValueError(f"Unable to get file content for {file.filename}. File might not be properly loaded.")
 
     def _invoke(
             self, tool_parameters: dict[str, Any]
@@ -67,8 +131,18 @@ class Pdf2imageTool(Tool):
                 try:
                     logger.info(f"Processing PDF file: {file.filename}")
 
+                    # Get file content (handles both blob and URL cases)
+                    try:
+                        file_content = self._get_file_content(file)
+                    except Exception as e:
+                        error_msg = f"❌ Error accessing file {file.filename}: {str(e)}"
+                        logger.error(error_msg)
+                        yield self.create_text_message(error_msg)
+                        all_conversions[file.filename] = {"error": f"File access error: {str(e)}"}
+                        continue
+
                     # Open PDF file
-                    file_bytes = io.BytesIO(file.blob)
+                    file_bytes = io.BytesIO(file_content)
                     doc = fitz_module.open(stream=file_bytes, filetype="pdf")
 
                     page_count = doc.page_count
