@@ -1,0 +1,22 @@
+identity:
+  author: shamspias
+  name: pdf2image
+  label:
+    en_US: PDF to Image Converter
+    bn_BD: পিডিএফ থেকে ইমেজ কনভার্টার
+    ru_RU: Конвертер PDF в изображения
+    zh_Hans: PDF转图片
+    pt_BR: Conversor PDF para Imagem
+  description:
+    en_US: Convert PDF pages to high-quality images with customizable format and resolution
+    bn_BD: পিডিএফ পৃষ্ঠাগুলোকে উচ্চমানের ইমেজে রূপান্তর করুন, ফরম্যাট এবং রেজোলিউশন কাস্টমাইজ করার সুবিধাসহ
+    ru_RU: Конвертируйте страницы PDF в изображения высокого качества с настройкой формата и разрешения
+    zh_Hans: 将PDF页面转换为高质量图片，支持自定义格式和分辨率
+    pt_BR: Converta páginas PDF em imagens de alta qualidade com formato e resolução personalizáveis
+  icon: pdf2image.png
+
+tools:
+  - tools/pdf2image.yaml
+extra:
+  python:
+    source: provider/pdf2image.py
